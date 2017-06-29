@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %} Document {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    {% block css %} {% endblock %}
+
+</head>
+<body>
+    {% block header %}
+    {% include 'news/header.html'  %}
+    {% endblock %}
+
+    {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>Hola mundo</p>
+                <span class="btn btn-success">Genial!</span>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block footer %}
+    <h5>Soy el footer de base</h5>
+    {% endblock %}
+
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block js %} {% endblock %}
+</body>
+</html>
