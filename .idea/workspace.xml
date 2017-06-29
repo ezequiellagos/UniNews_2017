@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd6d553b-656d-4da9-96df-1aa42aa9250d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/scraper/scrapeze.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scraper/uv.py" afterPath="$PROJECT_DIR$/scraper/uv.py" />
-    </list>
+    <list default="true" id="dd6d553b-656d-4da9-96df-1aa42aa9250d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
