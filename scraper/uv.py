@@ -51,6 +51,7 @@ def formatear_fecha(fecha, universidad):
 
 
 def uv():
+    universidad = "Universidad de Valparaíso"
     contents = urllib.urlopen("http://www.uv.cl/pdn/archivo/").read()
     bs = BeautifulSoup(contents, "html.parser")
     divs = bs.find_all("div", ["item n_caja borde6", "item n_caja borde6 fin"])
@@ -94,7 +95,7 @@ def uv():
         """
 
 
-        
+        print universidad
         print fecha
         print titulo
         print bajada
