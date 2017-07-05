@@ -15,11 +15,12 @@ CREATE TABLE IF NOT EXISTS noticias(
 id_noticia INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 titulo VARCHAR(200) NOT NULL,
 bajada TEXT NOT NULL,
-fecha DATE NOT NULL,
+fecha VARCHAR(10) NULL,
 link_noticia VARCHAR(200) NOT NULL,
 link_recurso VARCHAR(200) NOT NULL,
 id_universidad INTEGER NOT NULL,
 categoria VARCHAR(100) NOT NULL,
+contador_visitas INTEGER(10) DEFAULT '0',
 FOREIGN KEY (id_universidad) REFERENCES universidad(id_universidad)
 )"""
 
