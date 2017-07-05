@@ -1,0 +1,17 @@
+{% extends 'news/base.html' %}
+
+{% block title %}
+Detalle Noticias Universitarias
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ noticia.titulo }}</h1>
+<p>{{ noticia.link_noticia }}</p>
+
+
+<p>Contador antes: {{ contador_antes }}</p>
+
+<p>Contador despues: {{ contador_despues }}</p>
+
+{% endblock %}

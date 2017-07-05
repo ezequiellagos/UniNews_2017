@@ -1,0 +1,16 @@
+{% extends 'news/base.html' %}
+
+{% block title %}
+Estadísticas Noticias Universitarias
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+    <div class="container">
+
+        {% for noticia in noticias %}
+            <li>Contador:{{ noticia.contador_visitas }} Titulo: {{ noticia.titulo }}</li>
+        {% endfor %}
+
+{% endblock %}

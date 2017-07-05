@@ -4,3 +4,48 @@
 Noticias Universitarias
 {% endblock %}
 
+{% block content %}
+
+<!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Noticias Universitarias
+                    <small>el mundo maravilloso de la conexion</small>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="">
+                {% for noticia in ultimas_noticias %}
+                    <div class="col-md-4 portfolio-item juan">
+                        <div class="col-md-12">
+                            <a href="{% url 'detalle' noticia.id_noticia %}" target="_blank">
+                                <img class="img-responsive img-rounded center-block " style="height: 250px; width: 350px;" src="{{ noticia.link_recurso }}" alt="{{ noticia.titulo }}">
+                            </a>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h3 class="text-justify">
+                                <a href="{% url 'detalle' noticia.id_noticia %}" target="_blank" style="text-decoration: none;">{{ noticia.titulo }}</a>
+                            </h3>
+                        </div>
+
+                        <div class="col-md-12">
+                            <center><strong>{{ noticia.id_universidad.nombre }}</strong></center>
+                            <p class="text-justify">{{ noticia.bajada }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+{% endblock %}

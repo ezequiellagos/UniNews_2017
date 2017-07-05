@@ -4,33 +4,93 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{% block title %} Document {% endblock %}</title>
+
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/3-col-portfolio.css' %}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
     {% block css %} {% endblock %}
+    <!-- Temporary navbar container fix -->
 
 </head>
 <body>
-    {% block header %}
-    {% include 'news/header.html'  %}
+
+    {% block navigation %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">News</span>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{% url 'index' %}">Noticias</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'estadisticas' %}">Estadísticas</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
     {% endblock %}
 
     {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <p>Hola mundo</p>
-                <span class="btn btn-success">Genial!</span>
-            </div>
-        </div>
-    </div>
+
     {% endblock %}
 
     {% block footer %}
-    <h5>Soy el footer de base</h5>
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+        </div>
+    <!-- /.container -->
+
     {% endblock %}
 
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script>
+        <!-- Coloca todas las clases juan a una misma altura -->
+        $(document).ready(function() {
+            var heights = $(".juan").map(function() {
+                return $(this).height();
+            }).get(),
+
+            maxHeight = Math.max.apply(null, heights);
+
+            $(".juan").height(maxHeight);
+        });
+    </script>
+
     {% block js %} {% endblock %}
 </body>
 </html>
