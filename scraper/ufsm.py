@@ -52,7 +52,7 @@ def formatear_fecha(fecha, universidad):
     return fecha
 
 def insertar(nombre_u,region_u,titulo_n,bajada,fecha,link_noticia,link_recurso,categoria):
-    nombre_db = "../../BD/bd_universidades.db"
+    nombre_db = "../UniNews/bd_universidades.db"
     conexion = sqlite3.connect(nombre_db)
     conexion.text_factory = str
     cursor = conexion.cursor()
