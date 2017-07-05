@@ -55,6 +55,7 @@ def elimina_tildes(s):
 
 def upla():
     universidad = "Universidad de Playa Ancha"
+    region = 5
     url_rss = "http://www.upla.cl/noticias/feed/"
     feed = feedparser.parse( url_rss )
 
@@ -86,13 +87,6 @@ def upla():
                 imagen = article.find("img")['src']
                 break
 
-
-        print categoria_busqueda
-        print titulo
-        print bajada
-        print link
-        print imagen
-        print fecha
-        print "---------------------------------------------------------"
+        insertar(universidad, region, titulo, bajada, fecha, link, imagen, categoria_busqueda)
 
 upla()
