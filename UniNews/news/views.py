@@ -38,7 +38,6 @@ def estadisticas(request):
 
     #mejores_noticia_pucv = noticias.filter(id_universidad=5).aggregate(Max('contador_visitas'))
 
-
     # Suma de todas las visitas por universidad
     contador_pucv = noticias.filter(id_universidad__nombre__contains="Pontificia Universidad Catolica de Valparaiso").aggregate(Sum('contador_visitas'))
     mejores_noticia_pucv = noticias.filter(id_universidad__nombre__contains="Pontificia Universidad Catolica de Valparaiso").aggregate(Max('contador_visitas'))
@@ -57,16 +56,22 @@ def estadisticas(request):
 
 def region(request, region):
     noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__region__contains=region)
-    context = {'noticias':noticias, 'region':region}
+    noticias_mas_vistas = Noticias.objects.filter(id_universidad__region__contains=region).order_by('-contador_visitas')[:3]
+
+    context = {'noticias':noticias, 'region':region, 'noticias_mas_vistas':noticias_mas_vistas}
     return render(request, 'news/region.html', context)
 
 def categoria(request, categoria):
     noticias = Noticias.objects.order_by('-fecha').filter(categoria=categoria)
-    context = {'noticias':noticias, 'categoria':categoria}
+    noticias_mas_vistas = Noticias.objects.filter(categoria__contains=categoria).order_by('-contador_visitas')[:3]
+
+    context = {'noticias':noticias, 'categoria':categoria, 'noticias_mas_vistas':noticias_mas_vistas}
     return render(request, 'news/categoria.html', context)
 
 def universidad(request, universidad):
     noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__nombre__contains=universidad)
-    context = {'noticias':noticias, 'universidad':universidad}
+    noticias_mas_vistas = Noticias.objects.filter(id_universidad__nombre__contains=universidad).order_by('-contador_visitas')[:3]
+
+    context = {'noticias':noticias, 'universidad':universidad, 'noticias_mas_vistas':noticias_mas_vistas}
     return render(request, 'news/universidad.html', context)
 

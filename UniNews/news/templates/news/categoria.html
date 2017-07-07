@@ -1,7 +1,7 @@
 {% extends 'news/base.html' %}
 
 {% block title %}
-Noticias Universitarias
+Categoría {{ categoria }} - UniNews
 {% endblock %}
 
 {% block content %}
@@ -20,12 +20,53 @@ Noticias Universitarias
         <!-- /.row -->
 
         <!-- Projects Row -->
+        <!-- NOTICIAS Más vistas -->
+        <div class="row">
+        <h3>Noticias más vistas de <b>{{ categoria }}</b></h3>
+            <div class="">
+                {% for noticia in noticias_mas_vistas %}
+                    <div class="col-md-4 portfolio-item">
+                        <div class="col-md-12">
+                            <h3 class="text-justify">
+                                <a href="{% url 'detalle' noticia.id_noticia %}" target="_blank" style="text-decoration: none;">{{ noticia.titulo }}</a>
+                            </h3>
+                        </div>
+
+                        <div class="col-md-12">
+                            <a href="{% url 'detalle' noticia.id_noticia %}" target="_blank">
+                                <img class="img-responsive img-rounded center-block " style="height: 250px; width: 350px;" src="{{ noticia.link_recurso }}" alt="{{ noticia.titulo }}">
+                            </a>
+                            <small>{{ noticia.fecha }}</small>
+                            <small class="text-muted pull-right">Visitas: {{ noticia.contador_visitas }}</small>
+                        </div>
+
+                        <div class="col-md-12">
+                            {% if noticia.id_universidad.nombre == "Pontificia Universidad Catolica de Valparaiso"%}
+                                <span class="col-md-12 text-center text-success"><strong>{{ noticia.id_universidad.nombre }}</strong></span>
+                            {% elif noticia.id_universidad.nombre == "Universidad de Valparaiso" %}
+                                <span class="col-md-12 text-center text-danger"><strong>{{ noticia.id_universidad.nombre }}</strong></span>
+                            {% elif noticia.id_universidad.nombre == "Universidad Catolica del Norte" %}
+                                <span class="col-md-12 text-center text-warning"><strong>{{ noticia.id_universidad.nombre }}</strong></span>
+                            {% elif noticia.id_universidad.nombre == "Universidad Federico Santa Maria" %}
+                                <span class="col-md-12 text-center text-info"><strong>{{ noticia.id_universidad.nombre }}</strong></span>
+                            {% elif noticia.id_universidad.nombre == "Universidad de Playa Ancha" %}
+                                <span class="col-md-12 text-center text-primary"><strong>{{ noticia.id_universidad.nombre }}</strong></span>
+                            {% endif %}
+                            <p class="text-justify">{{ noticia.bajada }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Projects Row -->
         <!-- NOTICIAS ORDENADAS POR FECHA -->
         <div class="row">
-        <h3>Noticias Categoría: {{ categoria }}</h3>
+        <h3>Noticias Categoría: <b>{{ categoria }}</b></h3>
             <div class="">
                 {% for noticia in noticias %}
-                    <div class="col-md-4 portfolio-item juan well">
+                    <div class="col-md-4 portfolio-item juan">
                         <div class="col-md-12">
                             <h3 class="text-justify">
                                 <a href="{% url 'detalle' noticia.id_noticia %}" target="_blank" style="text-decoration: none;">{{ noticia.titulo }}</a>
