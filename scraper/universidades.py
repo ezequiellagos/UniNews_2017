@@ -64,7 +64,7 @@ def formatear_fecha(fecha, universidad):
     elif mes == "marzo" or mes == "mar":
         mes = '03'
     elif mes == "abril" or mes == "apr":
-        mes ='04'
+        mes = '04'
     elif mes == "mayo" or mes == "may":
         mes = '05'
     elif mes == "junio" or mes == "jun":
@@ -72,7 +72,7 @@ def formatear_fecha(fecha, universidad):
     elif mes == "julio" or mes == "jul":
         mes = '07'
     elif mes == "agosto" or mes == "aug":
-        mes ='08'
+        mes = '08'
     elif mes == "septiembre" or mes == "sep":
         mes = '09'
     elif mes == "octubre" or mes == "oct":
@@ -80,9 +80,29 @@ def formatear_fecha(fecha, universidad):
     elif mes == "noviembre" or mes == "nov":
         mes = '11'
     elif mes == "diciembre" or mes == "dec":
-        mes ='12'
+        mes = '12'
 
-    fecha = dia + "/" + mes + "/" + anno
+    if dia == "1":
+        dia = '01'
+    elif dia == "2":
+        dia = '02'
+    elif dia == "3" :
+        dia = '03'
+    elif dia == "4":
+        dia = '04'
+    elif dia == "5":
+        dia = '05'
+    elif dia == "6":
+        dia = '06'
+    elif dia == "7":
+        dia = '07'
+    elif dia == "8":
+        dia = '08'
+    elif dia == "9":
+        dia = '09'
+
+    #fecha = dia + "/" + mes + "/" + anno
+    fecha = anno + "-" + mes + "-" + dia
     return fecha
 
 def elimina_tildes(s):
@@ -108,7 +128,8 @@ def pucv():
         bajada = bs_noticia.find("p",{ "class" : "bajada" }).text
         fecha = bs_noticia.find("span",{"class":"fecha aright"})
         if fecha is None:
-            fecha = time.strftime("%d/%m/%Y")
+            #fecha = time.strftime("%d/%m/%Y")
+            fecha = time.strftime("%Y-%m-%d")
 
         else:
             fecha = formatear_fecha(fecha.text,nombre_uni)

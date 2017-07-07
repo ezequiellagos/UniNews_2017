@@ -25,7 +25,7 @@ class Noticias(models.Model):
     id_noticia = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=200)
     bajada = models.TextField()
-    fecha = models.CharField(max_length=10, null=True)
+    fecha = models.DateField(blank=True, null=True)
     link_noticia = models.CharField(max_length=200)
     link_recurso = models.CharField(max_length=200)
     id_universidad = models.ForeignKey('Universidad', models.DO_NOTHING, db_column='id_universidad')
