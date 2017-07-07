@@ -7,18 +7,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from .models import Universidad, Noticias
+from django.db.models import Max,Sum
 
 
 def index(request):
     #return HttpResponse("Hello, world. You're at the polls index.")
     ultimas_noticias = Noticias.objects.order_by('-fecha')
-    #universidad = Universidad.objects.filter(id_universidad=ultimas_noticias['id_universidad'])
+    noticias_mas_vistas = Noticias.objects.order_by('-contador_visitas')[:3]
 
-    universidades = Universidad.objects.get(id_universidad=1)
-    universidad = universidades
-
-
-    context = {'ultimas_noticias': ultimas_noticias, 'universidade':universidad}
+    context = {'ultimas_noticias': ultimas_noticias,'noticias_mas_vistas' :noticias_mas_vistas}
     return render(request, 'news/index.html', context)
 
 def detalle(request, id_noticia):
@@ -34,17 +31,41 @@ def detalle(request, id_noticia):
     return redirect(noticia.link_noticia)
 
 def estadisticas(request):
+
+    # Crea objeto con la tabla de noticias
     noticias = Noticias.objects.order_by('-contador_visitas')
-    context = {'noticias':noticias}
+
+    #mejores_noticia_pucv = noticias.filter(id_universidad=5).aggregate(Max('contador_visitas'))
+
+
+    # Suma de todas las visitas por universidad
+    contador_pucv = noticias.filter(id_universidad__nombre__contains="Pontificia Universidad Catolica de Valparaiso").aggregate(Sum('contador_visitas'))
+    mejores_noticia_pucv = noticias.filter(id_universidad__nombre__contains="Pontificia Universidad Catolica de Valparaiso").aggregate(Max('contador_visitas'))
+    #SELECT SUM(contador_visitas) in contador_visitas__max FROM noticias INNER JOIN universidad ON noticias.id_universidad = universidad.id_universidad WHERE
+    contador_upla = noticias.filter(id_universidad__nombre__contains="Universidad de Playa Ancha").aggregate(Sum('contador_visitas'))
+    contador_ufsm = noticias.filter(id_universidad__nombre__contains="Universidad Federico Santa Maria").aggregate(Sum('contador_visitas'))
+    contador_ucn = noticias.filter(id_universidad__nombre__contains="Universidad Catolica del Norte").aggregate(Sum('contador_visitas'))
+    contador_uv = noticias.filter(id_universidad__nombre__contains="Universidad de Valparaiso").aggregate(Sum('contador_visitas'))
+
+    # Asigna los contadores al diccionario contador
+    contador = {'upla':contador_upla, 'pucv':contador_pucv, 'ucn':contador_ucn, 'ufsm':contador_ufsm, 'uv':contador_uv, 'mejores_noticia_pucv':mejores_noticia_pucv}
+
+    # Variables que se envían a la vista
+    context = {'noticias':noticias , 'contador':contador}
     return render(request, 'news/estadisticas.html', context)
 
 def region(request, region):
-    noticias = Noticias.objects.order_by('-fecha')
-    context = {'region_noticia':region_noticia}
+    noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__region__contains=region)
+    context = {'noticias':noticias, 'region':region}
     return render(request, 'news/region.html', context)
 
 def categoria(request, categoria):
-    noticias = Noticias.objects.order_by('-fecha')
-    context = {'categoria_noticia':categoria_noticia}
+    noticias = Noticias.objects.order_by('-fecha').filter(categoria=categoria)
+    context = {'noticias':noticias, 'categoria':categoria}
     return render(request, 'news/categoria.html', context)
+
+def universidad(request, universidad):
+    noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__nombre__contains=universidad)
+    context = {'noticias':noticias, 'universidad':universidad}
+    return render(request, 'news/universidad.html', context)
 
