@@ -8,9 +8,12 @@ Estadísticas Noticias Universitarias
 
 <!-- Page Content -->
     <div class="container">
+    <p>UPLA : {{ contador.upla.contador_visitas__sum }}</p>
+    <p>UTFSM : {{ contador.ufsm.contador_visitas__sum }}</p>
+    <p>UV : {{ contador.uv.contador_visitas__sum }}</p>
+    <p>UCN : {{ contador.ucn.contador_visitas__sum }}</p>
+    <p>PUCV : {{ contador.pucv.contador_visitas__sum }}</p>
 
-        {% for noticia in noticias %}
-            <li>Contador:{{ noticia.contador_visitas }} Titulo: {{ noticia.titulo }}</li>
-        {% endfor %}
+    <p>mejor noticia: {{ contador.mejores_noticia_pucv }}</p>
 
 {% endblock %}
