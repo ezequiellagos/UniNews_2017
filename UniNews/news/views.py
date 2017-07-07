@@ -8,7 +8,7 @@ from django.http import HttpResponse
 
 from .models import Universidad, Noticias
 from django.db.models import Max,Sum
-from datetime import datetime
+from django.conf import settings
 
 
 def index(request):
