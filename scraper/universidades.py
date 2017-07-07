@@ -121,10 +121,15 @@ def pucv():
         categorias = categoria.findAll("a")
         try:
             category = categorias[2].text
+            categoria_busqueda = category.lower()
+            categoria_busqueda = elimina_tildes(categoria_busqueda)
+            categoria_busqueda = categoria_busqueda.replace(" ", "-")
         except:
-            category = "sin-categoria"
+            category = 'sin-categoria'
 
-        insertar(nombre_u, region_u, titulo, bajada, fecha, link, imagen, category)
+        
+
+        insertar(nombre_u, region_u, titulo, bajada, fecha, link, imagen, categoria_busqueda)
 
 def ucn():
     d = feedparser.parse("http://www.noticias.ucn.cl/feed/")
@@ -133,6 +138,9 @@ def ucn():
         nombre_uni = "ucn"
         link_noticia = (e.link)
         categoria = (e.category)
+        categoria_busqueda = categoria.lower()
+        categoria_busqueda = elimina_tildes(categoria_busqueda)
+        categoria_busqueda = categoria_busqueda.replace(" ", "-")
         fecha = e.published
         fecha = formatear_fecha(fecha,nombre_uni)
         description = e.description.split("/>")
@@ -142,7 +150,7 @@ def ucn():
         link_recurso = re.search('(?P<url>http?://[^\s]+(png|jpeg|jpg))', contenido).group("url")
         nombre_u = "Universidad Catolica del Norte"
         region_u = "2"
-        insertar(nombre_u, region_u, titulo, bajada, fecha, link_noticia, link_recurso, categoria)
+        insertar(nombre_u, region_u, titulo, bajada, fecha, link_noticia, link_recurso, categoria_busqueda)
 
 def usm():
     d = feedparser.parse("http://www.noticias.usm.cl/2017/feed/")
@@ -152,6 +160,9 @@ def usm():
         nombre_uni = "ufsm"
         link_noticia = (e.link)
         categoria = (e.category)
+        categoria_busqueda = categoria.lower()
+        categoria_busqueda = elimina_tildes(categoria_busqueda)
+        categoria_busqueda = categoria_busqueda.replace(" ", "-")
         bajada = (e.description)
         fecha = e.published
         fecha = formatear_fecha(fecha,nombre_uni)
@@ -159,7 +170,7 @@ def usm():
         cuerpo = e['content']
         contenido = cuerpo[0].value
         link_recurso = re.search('(?P<url>http?://[^\s]+(png|jpeg|jpg))', contenido).group("url")
-        insertar(nombre_u, region_u, titulo, bajada, fecha, link_noticia, link_recurso, categoria)
+        insertar(nombre_u, region_u, titulo, bajada, fecha, link_noticia, link_recurso, categoria_busqueda)
 
 def upla():
     universidad = "Universidad de Playa Ancha"
