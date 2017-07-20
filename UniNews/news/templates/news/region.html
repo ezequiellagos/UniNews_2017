@@ -100,6 +100,40 @@
         </div>
         <!-- /.row -->
 
+        <!-- Paginación -->
+        <div class="row">
+            <div class="">
+                <nav aria-label="Navegación por páginas" class="">
+                  <ul class="pager pagination-lg">
+                      {% if noticias.has_previous %}
+                            <li class="previous">
+                                <a href="?page={{ noticias.previous_page_number }}" aria-label="Anterior">
+                                    <span aria-hidden="true">&laquo; Anterior</span>
+                                </a>
+                            </li>
+                      {% endif %}
+
+                      {% for i in noticias.paginator.page_range %}
+                            <li {% if noticias.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+                      {% endfor %}
+
+                    {% if noticias.has_next %}
+                        <li class="next">
+                            <a href="?page={{ noticias.next_page_number }}" aria-label="Siguiente">
+                                <span aria-hidden="true">Siguiente &raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+
+                <span class="current">
+                    Página {{ noticias.number }} de {{ noticias.paginator.num_pages }}
+                </span>
+            </div>
+        </div>
+        <!-- Fin Paginación -->
+
         <hr>
 
 {% endblock %}

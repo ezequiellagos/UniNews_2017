@@ -7,6 +7,8 @@ def insertar(nombre_u,region_u,titulo_n,bajada,fecha,link_noticia,link_recurso,c
     conexion = sqlite3.connect(nombre_db)
     conexion.text_factory = str
     cursor = conexion.cursor()
+    if 'dest' in categoria:
+        categoria = 'destacadas'
     p = cursor.execute("SELECT COUNT(1) FROM universidad WHERE nombre = '%s'" % nombre_u)
     if p.fetchone()[0]:
         # Universidad existe
@@ -276,7 +278,7 @@ def uv():
 
         insertar(universidad, region, titulo, bajada, fecha, link, imagen, 'sin-categoria')
 
-pucv()
+#pucv()
 ucn()
 usm()
 upla()

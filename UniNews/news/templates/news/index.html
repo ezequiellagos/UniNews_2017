@@ -18,7 +18,8 @@ Noticias - UniNews
             </div>
         </div>
         <!-- /.row -->
-        <!-- ULTIMAS NOTICIAS -->
+
+        <!-- Últimas Noticias -->
         <div class="row">
         <h3>Noticias Más Vistas</h3>
             {% for noticia in noticias_mas_vistas %}
@@ -45,14 +46,12 @@ Noticias - UniNews
                 </div>
             {% endfor %}
         </div>
+        <!-- Fin Últimas Noticias -->
 
-        <!-- Projects Row -->
-        <!-- NOTICIAS ORDENADAS POR FECHA -->
+        <!-- Noticias ordenadas por fecha -->
         <div class="row">
-        <h3>Noticias</h3>
-            <div class="">
-                {% for noticia in ultimas_noticias %}
-                    <div class="col-md-4 portfolio-item juan">
+            {% for noticia in noticias %}
+                <div class="col-md-4 portfolio-item juan">
                         <div class="col-md-12">
                             <h3 class="text-justify">
                                 <a href="{% url 'detalle' noticia.id_noticia %}" target="_blank" style="text-decoration: none;">{{ noticia.titulo }}</a>
@@ -81,10 +80,43 @@ Noticias - UniNews
                             <p class="text-justify">{{ noticia.bajada }}</p>
                         </div>
                     </div>
-                {% endfor %}
+            {% endfor %}
+        </div>
+        <!-- Fin Noticias ordenadas por fecha -->
+
+        <!-- Paginación -->
+        <div class="row">
+            <div class="">
+                <nav aria-label="Navegación por páginas" class="">
+                  <ul class="pager pagination-lg">
+                      {% if noticias.has_previous %}
+                            <li class="previous">
+                                <a href="?page={{ noticias.previous_page_number }}" aria-label="Anterior">
+                                    <span aria-hidden="true">&laquo; Anterior</span>
+                                </a>
+                            </li>
+                      {% endif %}
+
+                      {% for i in noticias.paginator.page_range %}
+                            <li {% if noticias.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+                      {% endfor %}
+
+                    {% if noticias.has_next %}
+                        <li class="next">
+                            <a href="?page={{ noticias.next_page_number }}" aria-label="Siguiente">
+                                <span aria-hidden="true">Siguiente &raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+
+                <span class="current">
+                    Página {{ noticias.number }} de {{ noticias.paginator.num_pages }}
+                </span>
             </div>
         </div>
-        <!-- /.row -->
+        <!-- Fin Paginación -->
 
         <hr>
 

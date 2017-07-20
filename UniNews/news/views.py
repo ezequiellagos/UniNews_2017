@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 from django.http import HttpResponse
@@ -10,17 +11,30 @@ from .models import Universidad, Noticias
 from django.db.models import Max,Sum
 from django.conf import settings
 
+def paginacion(noticias_object, request, noticias_por_pagina=12):
+    paginacion = Paginator(noticias_object, noticias_por_pagina)
+    page = request.GET.get('page')
+    try:
+        noticias = paginacion.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        noticias = paginacion.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        noticias = paginacion.page(paginacion.num_pages)
+    return noticias
 
 def index(request):
     #return HttpResponse("Hello, world. You're at the polls index.")
     ultimas_noticias = Noticias.objects.order_by('-fecha')
     noticias_mas_vistas = Noticias.objects.order_by('-contador_visitas')[:3]
 
-    context = {'ultimas_noticias': ultimas_noticias,'noticias_mas_vistas' :noticias_mas_vistas}
+    noticias = paginacion(ultimas_noticias, request)
+
+    context = {'noticias_mas_vistas' :noticias_mas_vistas, 'noticias': noticias}
     return render(request, 'news/index.html', context)
 
 def detalle(request, id_noticia):
-
     noticia = get_object_or_404(Noticias, pk=id_noticia)
 
     contador_antes = noticia.contador_visitas
@@ -58,6 +72,8 @@ def region(request, region):
     noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__region__contains=region)
     noticias_mas_vistas = Noticias.objects.filter(id_universidad__region__contains=region).order_by('-contador_visitas')[:3]
 
+    noticias = paginacion(noticias, request)
+
     context = {'noticias':noticias, 'region':region, 'noticias_mas_vistas':noticias_mas_vistas}
     return render(request, 'news/region.html', context)
 
@@ -65,12 +81,16 @@ def categoria(request, categoria):
     noticias = Noticias.objects.order_by('-fecha').filter(categoria=categoria)
     noticias_mas_vistas = Noticias.objects.filter(categoria__contains=categoria).order_by('-contador_visitas')[:3]
 
+    noticias = paginacion(noticias, request)
+
     context = {'noticias':noticias, 'categoria':categoria, 'noticias_mas_vistas':noticias_mas_vistas}
     return render(request, 'news/categoria.html', context)
 
 def universidad(request, universidad):
     noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__nombre__contains=universidad)
     noticias_mas_vistas = Noticias.objects.filter(id_universidad__nombre__contains=universidad).order_by('-contador_visitas')[:3]
+
+    noticias = paginacion(noticias, request)
 
     context = {'noticias':noticias, 'universidad':universidad, 'noticias_mas_vistas':noticias_mas_vistas}
     return render(request, 'news/universidad.html', context)

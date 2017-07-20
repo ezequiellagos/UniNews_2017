@@ -35,6 +35,7 @@ class Noticias(models.Model):
     class Meta:
         managed = False
         db_table = 'noticias'
+        verbose_name_plural = 'Noticias'
 
 
 class Universidad(models.Model):
@@ -45,3 +46,7 @@ class Universidad(models.Model):
     class Meta:
         managed = False
         db_table = 'universidad'
+        verbose_name_plural = 'Universidades'
+
+    def __str__(self):
+        return '{}'.format(self.nombre)
