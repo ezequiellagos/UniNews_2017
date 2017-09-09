@@ -1,0 +1,1 @@
+0 8-20 * * 1-6 /home/django/script_noticias.sh

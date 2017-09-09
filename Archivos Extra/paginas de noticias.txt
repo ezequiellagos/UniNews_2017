@@ -1,0 +1,7 @@
+Páginas de Noticias
+
+	-PUCV:
+		- http://www.pucv.cl/pucv/site/edic/base/port/estudiantes.html
+		- http://www.pucv.cl/uuaa/site/edic/base/port/inicio.html
+		- http://prensa.ucv.cl/
+

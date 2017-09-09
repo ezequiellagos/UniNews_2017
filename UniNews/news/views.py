@@ -5,11 +5,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
-from django.http import HttpResponse
+# from django.http import HttpResponse
 
 from .models import Universidad, Noticias
 from django.db.models import Max,Sum
 from django.conf import settings
+
+from datetime import datetime, date, time, timedelta
+import calendar
+
 
 def paginacion(noticias_object, request, noticias_por_pagina=12):
     paginacion = Paginator(noticias_object, noticias_por_pagina)
@@ -26,8 +30,18 @@ def paginacion(noticias_object, request, noticias_por_pagina=12):
 
 def index(request):
     #return HttpResponse("Hello, world. You're at the polls index.")
+
+    # Formato de Fecha
+    hoy = datetime.today()
+    semana_atras = date.today() - timedelta(days=14)
+    formato = "%Y-%m-%d" # AAAA-MM-DD
+    fecha_actual = hoy.strftime(formato)
+    fecha_pasada = semana_atras.strftime(formato)
+    # Fin Formato Fecha
+
     ultimas_noticias = Noticias.objects.order_by('-fecha')
-    noticias_mas_vistas = Noticias.objects.order_by('-contador_visitas')[:3]
+    noticias_mas_vistas = Noticias.objects.filter(fecha__range=[fecha_pasada, fecha_actual]).order_by('-contador_visitas')[:3]
+
 
     noticias = paginacion(ultimas_noticias, request)
 
@@ -69,8 +83,16 @@ def estadisticas(request):
     return render(request, 'news/estadisticas.html', context)
 
 def region(request, region):
+    # Formato de Fecha
+    hoy = datetime.today()
+    semana_atras = date.today() - timedelta(days=14)
+    formato = "%Y-%m-%d" # AAAA-MM-DD
+    fecha_actual = hoy.strftime(formato)
+    fecha_pasada = semana_atras.strftime(formato)
+    # Fin Formato Fecha
+
     noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__region__contains=region)
-    noticias_mas_vistas = Noticias.objects.filter(id_universidad__region__contains=region).order_by('-contador_visitas')[:3]
+    noticias_mas_vistas = Noticias.objects.filter(id_universidad__region__contains=region).filter(fecha__range=[fecha_pasada, fecha_actual]).order_by('-contador_visitas')[:3]
 
     noticias = paginacion(noticias, request)
 
@@ -78,8 +100,16 @@ def region(request, region):
     return render(request, 'news/region.html', context)
 
 def categoria(request, categoria):
+    # Formato de Fecha
+    hoy = datetime.today()
+    semana_atras = date.today() - timedelta(days=14)
+    formato = "%Y-%m-%d" # AAAA-MM-DD
+    fecha_actual = hoy.strftime(formato)
+    fecha_pasada = semana_atras.strftime(formato)
+    # Fin Formato Fecha
+
     noticias = Noticias.objects.order_by('-fecha').filter(categoria=categoria)
-    noticias_mas_vistas = Noticias.objects.filter(categoria__contains=categoria).order_by('-contador_visitas')[:3]
+    noticias_mas_vistas = Noticias.objects.filter(categoria__contains=categoria).filter(fecha__range=[fecha_pasada, fecha_actual]).order_by('-contador_visitas')[:3]
 
     noticias = paginacion(noticias, request)
 
@@ -87,8 +117,16 @@ def categoria(request, categoria):
     return render(request, 'news/categoria.html', context)
 
 def universidad(request, universidad):
+    # Formato de Fecha
+    hoy = datetime.today()
+    semana_atras = date.today() - timedelta(days=14)
+    formato = "%Y-%m-%d" # AAAA-MM-DD
+    fecha_actual = hoy.strftime(formato)
+    fecha_pasada = semana_atras.strftime(formato)
+    # Fin Formato Fecha
+
     noticias = Noticias.objects.order_by('-fecha').filter(id_universidad__nombre__contains=universidad)
-    noticias_mas_vistas = Noticias.objects.filter(id_universidad__nombre__contains=universidad).order_by('-contador_visitas')[:3]
+    noticias_mas_vistas = Noticias.objects.filter(id_universidad__nombre__contains=universidad).filter(fecha__range=[fecha_pasada, fecha_actual]).order_by('-contador_visitas')[:3]
 
     noticias = paginacion(noticias, request)
 
